@@ -69,6 +69,10 @@
             </StackPanel>
 
             <control:SearchTextBox WaterMark="请输入关键字"/>
+
+            <StackPanel Margin="10 20">
+                <ComboBox x:Name="combobox" Style="{StaticResource style}"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
