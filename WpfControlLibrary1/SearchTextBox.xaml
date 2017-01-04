@@ -1,0 +1,60 @@
+﻿<UserControl x:Name="userControl" x:Class="WpfControlLibrary1.SearchTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
+             xmlns:local="clr-namespace:WpfControlLibrary1"
+             xmlns:xckt="http://schemas.xceed.com/wpf/xaml/toolkit"
+            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d">
+    <Border CornerRadius="2" BorderThickness="1" BorderBrush="Red">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <xckt:WatermarkTextBox Watermark="{Binding WaterMark, ElementName=userControl}" 
+                                   HorizontalContentAlignment="Left"
+                                   Text="{Binding SearchText, ElementName=userControl}"
+                                   BorderThickness="0" Background="Transparent"/>
+            <Image Grid.Column="1" x:Name="imagesDel"
+                   Width="20" Height="20" 
+                   VerticalAlignment="Top" MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                   Source="/WpfControlLibrary1;component/Images/Del.png">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SearchText,ElementName=userControl,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Value="">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SearchText,ElementName=userControl,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Image Grid.Column="1" 
+                   Width="20" Height="20" 
+                   VerticalAlignment="Top" 
+                   Source="/WpfControlLibrary1;component/Images/Search.png">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Visibility,ElementName=imagesDel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Value="Visible">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Visibility,ElementName=imagesDel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Value="Collapsed">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </Grid>
+
+    </Border>
+</UserControl>

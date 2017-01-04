@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Prism.Commands;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace WPFDemo
 {
@@ -23,6 +13,75 @@ namespace WPFDemo
         public MainWindow()
         {
             InitializeComponent();
+
+            TestCommand = new DelegateCommand(this.OnTest);
+        }
+
+        public ICommand TestCommand { get; set; }
+        void OnTest()
+        {
+            MessageBox.Show("Test OK!");
+        }
+
+        private Storyboard VisibilitySB
+        {
+            get
+            {
+                return this.FindResource("SB_Visibility") as Storyboard;
+            }
+        }
+
+        private Storyboard CollapsedSB
+        {
+            get
+            {
+                return this.FindResource("SB_Collapsed") as Storyboard;
+            }
+        }
+
+
+        bool flag = false;
+
+        private void ImageRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            //折叠
+            if (flag)
+            {
+                flag = false;
+                if (this.stackpanel.Visibility != Visibility.Collapsed)
+                {
+                    this.stackpanel.Visibility = Visibility.Collapsed;
+                }
+            }
+            else//展开
+            {
+                flag = true;
+                if (this.stackpanel.Visibility != Visibility.Visible)
+                {
+                    this.stackpanel.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void ImageRadioButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.stackpanel.Visibility = Visibility.Collapsed;
+            flag = false;
+        }
+
+        bool check = false;
+        private void ImageRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!check)
+            {
+
+                this.stackpanel.Visibility = Visibility.Visible;
+                //flag = true;
+
+                check = true;
+            }
+
+
         }
     }
 }

@@ -4,9 +4,71 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFDemo"
-        mc:Ignorable="d"
+        xmlns:cc="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
+        mc:Ignorable="d" Background="#e4e4e4"
+        xmlns:control="clr-namespace:WpfControlLibrary1;assembly=WpfControlLibrary1"
         Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="ItemsLabelStyle">
+            <Setter Property="Template" >
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="#8CDB3E" Height="40" CornerRadius="20">
+                            <ContentPresenter  VerticalAlignment="Center" 
+                                               HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ListBoxItem" x:Key="ItemStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="bd" Width="180" Margin="0 8" Background="Transparent" Height="40" CornerRadius="20">
+                            <ContentPresenter  VerticalAlignment="Center" 
+                                               HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Background" TargetName="bd" Value="#8CDB3E"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="bd" Value="#8CDB3E"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <StackPanel>
+            <RadioButton Content="测试"/>
+            <cc:ImageRadioButton Width="240" 
+                                 Click="ImageRadioButton_Click"
+                                 Unchecked="ImageRadioButton_Unchecked"
+                                 LogoImagePath="G:\Code\WPFDemo\WPFDemo\Images\dxgl.png"
+                                 Content="活动管理"
+                                 FontWeight="Bold" 
+                                 Foreground="White"
+                                 Height="50"/>
+            <StackPanel x:Name="stackpanel" Visibility="Collapsed" Width="240" HorizontalAlignment="Center">
+                <ListBox Foreground="#2c2e3d" Background="#3E4770" BorderThickness="0" ItemContainerStyle="{StaticResource ItemStyle}">
+                    <ListBoxItem Content="活动管理"/>
+                    <ListBoxItem Content="报名及执行"/>
+                </ListBox>
+            </StackPanel>
+
+            <control:SearchTextBox WaterMark="请输入关键字"/>
+        </StackPanel>
     </Grid>
 </Window>
